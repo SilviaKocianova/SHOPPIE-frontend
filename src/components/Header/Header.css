@@ -1,0 +1,38 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .header-title-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .header-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .edit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .header-user-info {
+    margin-top: 0.5rem;
+    color: #666;
+  }
+  
