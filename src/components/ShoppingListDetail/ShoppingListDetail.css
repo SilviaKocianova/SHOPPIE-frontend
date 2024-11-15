@@ -50,4 +50,22 @@
   }
   
 
+  .edit-button {
+    background-color: #BCE1E1;
+    color: #6B6B6B;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .edit-button:hover {
+    background-color: #a2c9c9;
+    transition: 500ms;
+  }
+  
+  .list-owner {
+    margin-top: 0.5rem;
+    color: #6B6B6B
+  }
   

@@ -15,26 +15,9 @@
   
   .header-title {
     font-size: 1.8rem;
+    font-weight:800;
     color: #ffffff;
     margin: 0;
 
-  }
-  
-  .edit-button {
-    background-color: #BCE1E1;
-    color: #6B6B6B;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .edit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .header-user-info {
-    margin-top: 0.5rem;
-    color: #666;
   }
   

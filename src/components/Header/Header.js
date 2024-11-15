@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 
-const Header = ({ user, shoppingListName, onEditName }) => {
+const Header = ({ appName, user, onEditName }) => {
   const handleEdit = () => {
     const newName = prompt('Enter new name:');
     if (newName && newName.trim() !== '') {
@@ -13,7 +13,7 @@ const Header = ({ user, shoppingListName, onEditName }) => {
   return (
     <header className="header">
       <div className="header-title-section">
-        <h1 className="header-title">{shoppingListName}</h1>
+        <h1 className="header-title">{appName}</h1>  {/* Display app name here */}
         {user && user.isOwner && (
           <button className="edit-button" onClick={handleEdit}>
             Edit Name
@@ -26,11 +26,11 @@ const Header = ({ user, shoppingListName, onEditName }) => {
 };
 
 Header.propTypes = {
+  appName: PropTypes.string.isRequired,  // Prop for app name
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
     isOwner: PropTypes.bool.isRequired, // Indicate if the user is the owner
   }).isRequired,
-  shoppingListName: PropTypes.string.isRequired,
   onEditName: PropTypes.func.isRequired,
 };
 

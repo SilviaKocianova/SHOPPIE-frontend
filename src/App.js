@@ -14,8 +14,9 @@ function App() {
     ],
   };
 
+ 
   const [shoppingList, setShoppingList] = useState(initialList);
-  const [user, setUser] = useState({ name: 'John Doe', isOwner: true });
+  const [user, setUser] = useState({ name: 'Petr Novak', isOwner: true });
 
   const handleEditName = (newName) => {
     setShoppingList({ ...shoppingList, name: newName });
@@ -44,14 +45,18 @@ function App() {
     });
   };
 
+  const appName = "SH☻PPIE.";
+
   return (
     <div className="App">
-      <Header user={user} shoppingListName={shoppingList.name} onEditName={handleEditName} />
+      <Header appName={appName} onEditName={handleEditName} />
       <ShoppingListDetail
         list={shoppingList}
+        user={user} // Pass user to ShoppingListDetail
         onAddItem={handleAddItem}
         onRemoveItem={handleRemoveItem}
         onMarkAsResolved={handleMarkAsResolved}
+        onEditName={handleEditName}
       />
     </div>
   );

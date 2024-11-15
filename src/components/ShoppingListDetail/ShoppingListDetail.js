@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './ShoppingListDetail.css';
 
-const ShoppingListDetail = ({ list, onAddItem, onRemoveItem, onMarkAsResolved }) => {
+const ShoppingListDetail = ({ list, user, onAddItem, onRemoveItem, onMarkAsResolved, onEditName }) => {
   const [newItem, setNewItem] = useState('');
 
+  // Handles adding a new item to the list
   const handleAddItem = () => {
     if (newItem.trim() !== '') {
       onAddItem({ id: `item${Date.now()}`, name: newItem, resolved: false });
@@ -14,9 +15,28 @@ const ShoppingListDetail = ({ list, onAddItem, onRemoveItem, onMarkAsResolved })
     }
   };
 
+  // Handles editing the shopping list name
+  const handleEdit = () => {
+    const newName = prompt('Enter new name:');
+    if (newName && newName.trim() !== '') {
+      onEditName(newName);
+    } else {
+      alert('List name cannot be empty');
+    }
+  };
+
   return (
     <div className="shopping-list-detail">
-      <h2>{list.name}</h2>
+      <h2 className="list-title">{list.name}</h2>
+      {user && <p className="list-owner">Owner: {user.name}</p>}
+
+      {/* Render the edit button only if the user is the owner */}
+      {user?.isOwner && (
+        <button className="edit-button" onClick={handleEdit}>
+          Edit Name
+        </button>
+      )}
+
       <ul className="shopping-list">
         {list.items.map(item => (
           <li key={item.id} className={`shopping-list-item ${item.resolved ? 'resolved' : ''}`}>
@@ -28,6 +48,7 @@ const ShoppingListDetail = ({ list, onAddItem, onRemoveItem, onMarkAsResolved })
           </li>
         ))}
       </ul>
+
       <div className="add-item-section">
         <input
           type="text"
@@ -53,9 +74,14 @@ ShoppingListDetail.propTypes = {
       })
     ).isRequired,
   }).isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    isOwner: PropTypes.bool.isRequired,
+  }).isRequired,
   onAddItem: PropTypes.func.isRequired,
   onRemoveItem: PropTypes.func.isRequired,
   onMarkAsResolved: PropTypes.func.isRequired,
+  onEditName: PropTypes.func.isRequired,
 };
 
 export default ShoppingListDetail;
