@@ -16,13 +16,7 @@ const Header = ({ appName, user, onEditName }) => {
     <header className="header">
       <div className="header-title-section">
         <h1 className="header-title">{appName}</h1>
-        {user && user.isOwner && (
-          <button className="edit-button" onClick={handleEdit}>
-            Edit Name
-          </button>
-        )}
       </div>
-      {user && <p className="header-user-info">Owner: {user.name}</p>}
     </header>
   );
 };
