@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header.js';
 import ShoppingListDetail from './components/ShoppingListDetail/ShoppingListDetail.js';
-import ShoppingListMembers from './components/ShoppingListMembers/ShoppingListMembers.js';
 
 function App() {
   const initialList = {
@@ -49,7 +48,6 @@ function App() {
     });
   };
 
-  // Member management functions
   const handleAddMember = (newMemberName) => {
     const newMember = {
       id: `member${Date.now()}`,
@@ -70,15 +68,11 @@ function App() {
       <ShoppingListDetail
         list={shoppingList}
         user={user}
+        members={members} // Pass members as a prop
         onAddItem={handleAddItem}
         onRemoveItem={handleRemoveItem}
         onMarkAsResolved={handleMarkAsResolved}
         onEditName={handleEditName}
-      />
-      <ShoppingListMembers
-        members={members}
-        onAddMember={handleAddMember}
-        onRemoveMember={handleRemoveMember}
       />
     </div>
   );

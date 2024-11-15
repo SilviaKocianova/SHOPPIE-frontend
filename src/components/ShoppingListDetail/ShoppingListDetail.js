@@ -4,12 +4,11 @@ import './ShoppingListDetail.css';
 import unresolvedSvg from '../img/unresolved.svg';
 import ShoppingListMembers from '../ShoppingListMembers/ShoppingListMembers';
 
-
-
-const ShoppingListDetail = ({ list, user, onAddItem, onRemoveItem, onMarkAsResolved, onEditName }) => {
+const ShoppingListDetail = ({ list, user, members: initialMembers, onAddItem, onRemoveItem, onMarkAsResolved, onEditName }) => {
   const [newItem, setNewItem] = useState('');
+  const [members, setMembers] = useState(initialMembers);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Handles adding a new item to the list
   const handleAddItem = () => {
     if (newItem.trim() !== '') {
       onAddItem({ id: `item${Date.now()}`, name: newItem, resolved: false });
@@ -19,7 +18,6 @@ const ShoppingListDetail = ({ list, user, onAddItem, onRemoveItem, onMarkAsResol
     }
   };
 
-  // Handles editing the shopping list name
   const handleEdit = () => {
     const newName = prompt('Enter new name:');
     if (newName && newName.trim() !== '') {
@@ -29,55 +27,71 @@ const ShoppingListDetail = ({ list, user, onAddItem, onRemoveItem, onMarkAsResol
     }
   };
 
+  const handleAddMember = (newMemberName) => {
+    const newMember = { id: `member${Date.now()}`, name: newMemberName };
+    setMembers([...members, newMember]);
+  };
+
+  const handleRemoveMember = (memberId) => {
+    setMembers(members.filter(member => member.id !== memberId));
+  };
+
   return (
     <div className="shopping-list-detail">
       <div className="shopping-list-detail-box">
-      <div className="title-and-edit">
-      <h2 className="list-title">{list.name}</h2>
+        <div className="title-and-edit">
+          <h2 className="list-title">{list.name}</h2>
 
-            {/* Render the edit button only if the user is the owner */}
-            {user?.isOwner && (
-        <button className="edit-button" onClick={handleEdit}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5" width="20" height="20">
-  <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
-</svg>
+          {user?.isOwner && (
+            <button className="edit-button" onClick={handleEdit}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5" width="20" height="20">
+                <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
+              </svg>
+            </button>
+          )}
 
-        </button>
-      )}
+          <button className="manage-members-button" onClick={() => setIsModalOpen(true)}>
+            Manage Members
+          </button>
+        </div>
+        {user && <p className="list-owner">Owner: {user.name}</p>}
 
-      </div>
-      {user && <p className="list-owner">Owner: {user.name}</p>}
-      
+        <ul className="shopping-list">
+          {list.items.map(item => (
+            <li key={item.id} className={`shopping-list-item ${item.resolved ? 'resolved' : ''}`}>
+              {item.name}
+              <button className="resolve-unresolve" onClick={() => onMarkAsResolved(item.id)}>
+                {item.resolved ? 'Unresolve' : (
+                  <img src={unresolvedSvg} alt="Unresolved" width="20" height="20" />
+                )}
+              </button>
+              <button onClick={() => onRemoveItem(item.id)}>Remove</button>
+            </li>
+          ))}
+        </ul>
 
+        <div className="add-item-section">
+          <input
+            type="text"
+            value={newItem}
+            onChange={(e) => setNewItem(e.target.value)}
+            placeholder="Enter new item"
+          />
+          <button onClick={handleAddItem}>Add Item</button>
+        </div>
 
-      
-
-<ul className="shopping-list">
-  {list.items.map(item => (
-    <li key={item.id} className={`shopping-list-item ${item.resolved ? 'resolved' : ''}`}>
-      {item.name}
-      <button class="resolve-unresolve" onClick={() => onMarkAsResolved(item.id)}>
-        {item.resolved ? 'Unresolve' : (
-          <img src={unresolvedSvg} alt="Unresolved" width="20" height="20" />
+        {isModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <button className="close-modal" onClick={() => setIsModalOpen(false)}>Close</button>
+              <ShoppingListMembers
+                members={members}
+                onAddMember={handleAddMember}
+                onRemoveMember={handleRemoveMember}
+              />
+            </div>
+          </div>
         )}
-      </button>
-      <button onClick={() => onRemoveItem(item.id)}>Remove</button>
-    </li>
-  ))}
-</ul>
-
-
-
-
-      <div className="add-item-section">
-        <input
-          type="text"
-          value={newItem}
-          onChange={(e) => setNewItem(e.target.value)}
-          placeholder="Enter new item"
-        />
-        <button onClick={handleAddItem}>Add Item</button>
-      </div>
       </div>
     </div>
   );
@@ -87,6 +101,12 @@ ShoppingListDetail.propTypes = {
   list: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    members: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      })
+    ),
     items: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -99,6 +119,7 @@ ShoppingListDetail.propTypes = {
     name: PropTypes.string.isRequired,
     isOwner: PropTypes.bool.isRequired,
   }).isRequired,
+  members: PropTypes.array.isRequired, // Add prop type for members
   onAddItem: PropTypes.func.isRequired,
   onRemoveItem: PropTypes.func.isRequired,
   onMarkAsResolved: PropTypes.func.isRequired,
