@@ -1,8 +1,15 @@
 .shopping-list-detail {
-    padding: 1rem;
-    background-color: #ffffff;
+    
+    
     border: 1px solid #ddd;
     border-radius: 8px;
+    padding: 2rem 5rem 5rem;
+  }
+
+  .shopping-list-detail-box {
+    background-color: #DFF3F3;
+    padding: 2rem 5rem 5rem;
+    border-radius: 20px;
   }
   
   .shopping-list {
@@ -38,23 +45,30 @@
   
   .add-item-section button {
     padding: 0.5rem 1rem;
-    background-color: #28a745;
-    color: white;
+    background-color: #BCE1E1;
+    color: #6B6B6B;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   
   .add-item-section button:hover {
-    background-color: #218838;
+    background-color: #a2c9c9;
+    transition: 500ms;
   }
   
+  .list-title {
+    color: #6B6B6B;
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
 
   .edit-button {
     background-color: #BCE1E1;
     color: #6B6B6B;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 7px;
     cursor: pointer;
     border-radius: 4px;
   }
@@ -69,3 +83,17 @@
     color: #6B6B6B
   }
   
+  .title-and-edit {
+    display: flex;
+    justify-content: space-between; /* This will place space between the two elements */
+    align-items: center; /* Align the items vertically */
+    width: 100%;
+  }
+
+  .resolve-unresolve {
+    background-color: transparent; 
+    text-decoration: none;           
+    border: none;                   /* Removes any drop shadow */
+    outline: none;                   
+    padding: 0;                      
+  }
