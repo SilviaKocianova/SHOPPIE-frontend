@@ -65,12 +65,18 @@
   }
 
   .edit-button {
+    margin: 5px;
     background-color: #BCE1E1;
     color: #6B6B6B;
     border: none;
     padding: 7px;
     cursor: pointer;
     border-radius: 4px;
+  }
+
+  .edit-button svg {
+    width: 1.2rem; 
+    height: 1.2rem;
   }
   
   .edit-button:hover {
@@ -144,5 +150,51 @@
   .manage-members-button:hover {
     background-color: #a2c9c9;
     transition: 500ms;;
+  }
+  
+
+  .shopping-list-members button {
+    background-color: #BCE1E1;
+    color: #6B6B6B;
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .close-modal {
+    color: red;
+  }
+
+  .manage-members-button {
+    background-color: #BCE1E1;
+    color: #6B6B6B;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .manage-members-button svg {
+    width: 1.5rem; 
+    height: 1.5rem;
+  }
+
+  .remove-item-from-list {
+    background-color: transparent;
+    color: #6B6B6B;
+    border: none;
+    padding: 10px; 
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .remove-item-from-list svg {
+    width: 25px;  
+    height: 25px;
   }
   
