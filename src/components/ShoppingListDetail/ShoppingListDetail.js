@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './ShoppingListDetail.css';
 import unresolvedSvg from '../img/unresolved.svg';
+import resolvedSvg from '../img/resolved.svg'
 import ShoppingListMembers from '../ShoppingListMembers/ShoppingListMembers';
 
 const ShoppingListDetail = ({ list, user, onAddItem, onRemoveItem, onMarkAsResolved, onEditName }) => {
@@ -84,12 +85,18 @@ const ShoppingListDetail = ({ list, user, onAddItem, onRemoveItem, onMarkAsResol
         <ul className="shopping-list">
           {filteredItems.map(item => (
             <li key={item.id} className={`shopping-list-item ${item.resolved ? 'resolved' : ''}`}>
+                            <button className="resolve-unresolve" onClick={() => onMarkAsResolved(item.id)}>
+  {item.resolved ? (
+    <>
+      <img src={resolvedSvg} class="item-resolved" alt="Resolved" width="20" height="20" /></>
+  ) : (
+    <>
+      <img src={unresolvedSvg} class="item-unresolved" alt="Unresolved" width="20" height="20" /></>
+  )}
+</button>
+
               {item.name}
-              <button className="resolve-unresolve" onClick={() => onMarkAsResolved(item.id)}>
-                {item.resolved ? 'Unresolve' : (
-                  <img src={unresolvedSvg} alt="Unresolved" width="20" height="20" />
-                )}
-              </button>
+
               <button className="remove-item-from-list" onClick={() => onRemoveItem(item.id)}>
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

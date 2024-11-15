@@ -19,6 +19,7 @@
   
   .shopping-list-item {
     display: flex;
+    color: #407a7a;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem;
@@ -27,9 +28,19 @@
   
   .shopping-list-item.resolved {
     text-decoration: line-through;
-    color: #999;
+    color: #a1a3a3;
   }
   
+.item-resolved {
+  width: 2rem;
+  height: 2rem;
+}
+
+.item-unresolved {
+  width: 2rem;
+  height: 1.5rem;
+}
+
   .add-item-section {
     margin-top: 1rem;
     display: flex;
@@ -40,7 +51,7 @@
     flex: 1;
     padding: 0.5rem;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
   }
   
   .add-item-section button {
@@ -192,9 +203,23 @@
     justify-content: center;
     align-items: center;
   }
+
+  .remove-item-from-list:hover {
+    color: red;
+    transition: 500ms;
+  }
   
   .remove-item-from-list svg {
     width: 25px;  
     height: 25px;
   }
   
+  .filter-dropdown {
+    background-color: #BCE1E1;
+    color: #6B6B6B;
+    border: none;
+    margin: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
