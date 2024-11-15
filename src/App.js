@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header.js';
 import ShoppingListDetail from './components/ShoppingListDetail/ShoppingListDetail.js';
+import ShoppingListMembers from './components/ShoppingListMembers/ShoppingListMembers.js';
 
 function App() {
   const initialList = {
@@ -14,9 +15,12 @@ function App() {
     ],
   };
 
- 
   const [shoppingList, setShoppingList] = useState(initialList);
   const [user, setUser] = useState({ name: 'Petr Novak', isOwner: true });
+  const [members, setMembers] = useState([
+    { id: 'member1', name: 'Petr Novak' },
+    { id: 'member2', name: 'Anna Smith' },
+  ]);
 
   const handleEditName = (newName) => {
     setShoppingList({ ...shoppingList, name: newName });
@@ -45,18 +49,36 @@ function App() {
     });
   };
 
+  // Member management functions
+  const handleAddMember = (newMemberName) => {
+    const newMember = {
+      id: `member${Date.now()}`,
+      name: newMemberName,
+    };
+    setMembers([...members, newMember]);
+  };
+
+  const handleRemoveMember = (memberId) => {
+    setMembers(members.filter(member => member.id !== memberId));
+  };
+
   const appName = "SH☻PPIE.";
 
   return (
     <div className="App">
-      <Header appName={appName} onEditName={handleEditName} />
+      <Header appName={appName} user={user} onEditName={handleEditName} />
       <ShoppingListDetail
         list={shoppingList}
-        user={user} // Pass user to ShoppingListDetail
+        user={user}
         onAddItem={handleAddItem}
         onRemoveItem={handleRemoveItem}
         onMarkAsResolved={handleMarkAsResolved}
         onEditName={handleEditName}
+      />
+      <ShoppingListMembers
+        members={members}
+        onAddMember={handleAddMember}
+        onRemoveMember={handleRemoveMember}
       />
     </div>
   );

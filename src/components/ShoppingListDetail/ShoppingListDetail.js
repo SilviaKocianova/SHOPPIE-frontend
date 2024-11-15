@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './ShoppingListDetail.css';
 import unresolvedSvg from '../img/unresolved.svg';
+import ShoppingListMembers from '../ShoppingListMembers/ShoppingListMembers';
+
 
 
 const ShoppingListDetail = ({ list, user, onAddItem, onRemoveItem, onMarkAsResolved, onEditName }) => {
