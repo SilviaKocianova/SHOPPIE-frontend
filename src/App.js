@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import Header from './components/Header/Header.js';
-import ShoppingListDetail from './components/ShoppingListDetail/ShoppingListDetail.js';
+import Header from './components/Header/Header';
+import ShoppingListDetail from './components/ShoppingListDetail/ShoppingListDetail';
 
 function App() {
   const initialList = {
@@ -15,14 +15,23 @@ function App() {
   };
 
   const [shoppingList, setShoppingList] = useState(initialList);
-  const [user, setUser] = useState({ name: 'Petr Novak', isOwner: true });
   const [members, setMembers] = useState([
     { id: 'member1', name: 'Petr Novak' },
     { id: 'member2', name: 'Anna Smith' },
   ]);
+  const [currentUser, setCurrentUser] = useState(members[0]);
+
+  const handleUserChange = (memberId) => {
+    const selectedMember = members.find((member) => member.id === memberId);
+    setCurrentUser(selectedMember);
+  };
 
   const handleEditName = (newName) => {
-    setShoppingList({ ...shoppingList, name: newName });
+    if (currentUser.isOwner) {
+      setShoppingList({ ...shoppingList, name: newName });
+    } else {
+      alert('Only the owner can edit the name of the shopping list.');
+    }
   };
 
   const handleAddItem = (newItem) => {
@@ -35,46 +44,40 @@ function App() {
   const handleRemoveItem = (itemId) => {
     setShoppingList({
       ...shoppingList,
-      items: shoppingList.items.filter(item => item.id !== itemId),
+      items: shoppingList.items.filter((item) => item.id !== itemId),
     });
   };
 
   const handleMarkAsResolved = (itemId) => {
     setShoppingList({
       ...shoppingList,
-      items: shoppingList.items.map(item =>
+      items: shoppingList.items.map((item) =>
         item.id === itemId ? { ...item, resolved: !item.resolved } : item
       ),
     });
   };
 
-  const handleAddMember = (newMemberName) => {
-    const newMember = {
-      id: `member${Date.now()}`,
-      name: newMemberName,
-    };
+  const handleAddMember = (newMember) => {
     setMembers([...members, newMember]);
   };
 
   const handleRemoveMember = (memberId) => {
-    setMembers(members.filter(member => member.id !== memberId));
+    setMembers(members.filter((member) => member.id !== memberId));
   };
-
-  const appName = "SH☻PPIE.";
 
   return (
     <div className="App">
-      <Header appName={appName} user={user} onEditName={handleEditName} />
+      <Header user={currentUser} onUserChange={handleUserChange} members={members} />
       <ShoppingListDetail
         list={shoppingList}
-        user={user}
+        user={currentUser}
         members={members}
         onAddItem={handleAddItem}
         onRemoveItem={handleRemoveItem}
         onMarkAsResolved={handleMarkAsResolved}
         onEditName={handleEditName}
         onAddMember={handleAddMember}
-        onRemoveMember={handleRemoveMember} // Pass remove member handler here
+        onRemoveMember={handleRemoveMember}
       />
     </div>
   );

@@ -105,7 +105,7 @@ const ShoppingListDetail = ({ list, user, members, onAddItem, onRemoveItem, onMa
               <ShoppingListMembers
                 members={members}
                 onAddMember={onAddMember}
-                onRemoveMember={onRemoveMember} // Pass down remove member handler here
+                onRemoveMember={onRemoveMember}
               />
               {!user?.isOwner && (
                 <button className="leave-list-button" onClick={handleLeaveList}>
@@ -133,9 +133,10 @@ ShoppingListDetail.propTypes = {
     ).isRequired,
   }).isRequired,
   user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     isOwner: PropTypes.bool.isRequired,
-  }).isRequired,
+  }),
   members: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -147,7 +148,7 @@ ShoppingListDetail.propTypes = {
   onMarkAsResolved: PropTypes.func.isRequired,
   onEditName: PropTypes.func.isRequired,
   onAddMember: PropTypes.func.isRequired,
-  onRemoveMember: PropTypes.func.isRequired, // Add prop type for remove member
+  onRemoveMember: PropTypes.func.isRequired,
 };
 
 export default ShoppingListDetail;

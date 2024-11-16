@@ -2,32 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 
-const Header = ({ appName, user, onEditName }) => {
-  const handleEdit = () => {
-    const newName = prompt('Enter new name:');
-    if (newName && newName.trim() !== '') {
-      onEditName(newName);
-    } else {
-      alert('List name cannot be empty');
-    }
-  };
-
+const Header = ({ currentUser, members, onUserChange }) => {
   return (
-    <header className="header">
-      <div className="header-title-section">
-        <h1 className="header-title">{appName}</h1>
-      </div>
+    <header className="app-header">
+      <h1>Shopping List App</h1>
+      <select
+        className="member-select"
+        value={currentUser?.id || ''}
+        onChange={(e) => onUserChange(e.target.value)}
+      >
+        {members.map((member) => (
+          <option key={member.id} value={member.id}>
+            {member.name}
+          </option>
+        ))}
+      </select>
     </header>
   );
 };
 
 Header.propTypes = {
-  appName: PropTypes.string.isRequired,
-  user: PropTypes.shape({
+  currentUser: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    isOwner: PropTypes.bool.isRequired,
-  }).isRequired,
-  onEditName: PropTypes.func.isRequired,
+  }),
+  members: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onUserChange: PropTypes.func.isRequired,
 };
 
 export default Header;

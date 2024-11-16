@@ -22,3 +22,17 @@
 
   }
   
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .member-select {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
