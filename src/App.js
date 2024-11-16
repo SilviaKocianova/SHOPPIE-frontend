@@ -68,11 +68,13 @@ function App() {
       <ShoppingListDetail
         list={shoppingList}
         user={user}
-        members={members} // Pass members as a prop
+        members={members}
         onAddItem={handleAddItem}
         onRemoveItem={handleRemoveItem}
         onMarkAsResolved={handleMarkAsResolved}
         onEditName={handleEditName}
+        onAddMember={handleAddMember}
+        onRemoveMember={handleRemoveMember} // Pass remove member handler here
       />
     </div>
   );
